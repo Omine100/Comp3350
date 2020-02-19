@@ -1,0 +1,179 @@
+Chapter 1:
+	- Definitions
+		- Assembler: Utility program that takes code from assembly language to machine language
+		- Linker: Utility program that puts files created by assemblers into an executable program
+		- Debugger: Utility program that lets you step through a program and examine
+		- Registers: Named storage locations in the CPU that hold results
+			- EAX, EBX, etc.
+		- Base: Maximum number of symbols that can be assigned to a single digit
+		- Bit: Binary digit
+			- Numbered sequentially starting at zero on the right (LSB) and increasing towards the left (MSB)
+			- Unsigned bit: By default positive
+			- Signed bit: Can be positive or negative
+		- String: One or more ASCII codes
+	- Welcome to assembly language
+		- One-to-one relationship with machine language
+			- Has direct access to hardware
+		- Not portable
+	- Virtual machine concept
+		- Machine language is L1
+			- Binary digital logic
+		- Instruction set is L2
+			- Computer chip manufacturers design instructions for move, add, or multiply
+		- Assembly language is L3
+		- High level languages are L4
+	- Data representation
+		- Storage sizes
+			- Byte: 8 bits, Word: 16 bits, Dword: 32 bits, Qword: 64 bits
+		- Binary unsigned bits
+			- Converting binary to decimal
+				- 1011 = 1 * 2^3 + 1 * 2^1 + 1
+			- Converting decimal to binary
+				- Divide by 2 till zero
+				- Take the remainders and flip
+			- Ranges
+				- 0 -> 2^(bit number) - 1
+		- Binary signed bits
+			- The MSB indicates the sign (0 is positive, 1 is negative)
+			- Two's complement
+				- Formed by inverting its bits and adding 1
+			- Converting signed binary to decimal
+				- If MSB is 1
+					- Create two's complement
+					- Convert new number to decimal as if it were an unsigned binary integer
+					- We know it has a negative sign
+				- If MSB is 0
+					- Convert number to decimal as if it were an unsigned binary integer
+					- We know it has a positive sign
+			- Converting signed decimal to binary
+				- Convert absolute value of the decimal to binary
+				- If original was negative
+					- Create two's complement
+				- If orignal was positive
+					- Done
+			- Ranges
+				- -2^(bit number - 1) -> 2^(bit number - 1) - 1
+		- Hexadecimal
+			- Two's complement
+				- Formed by inverting its bits and adding 1
+					- Subtracting the digit from 15 makes this easier
+					- 6A3D -> 95C2 + 1 -> 95C3
+			- Converting hexadecimal to decimal
+				- 1234 = 1 x 16^3 + 2 * 16^2 + 3 * 16 + 4
+			- Converting decimal to hexadecimal
+				- Divide by 16 till zero
+				- Take the remainders and flip
+	- Boolean expressions
+		- Types
+			- NOT: Reverses the boolean value
+			- AND: Requires two operands and output is true when both operands are true
+				- X = 11111111, Y = 00011100, X ^ Y = 00011100
+			- OR: Requires two operands and output is true when at least one operand is true
+				- X = 11101100, Y = 00011100, X [OR] Y = 11111100
+		- Order of precedence
+			- NOT has highest, then the others (unless parentheses are involved)
+- Chapter 2:
+	- Definitions
+		- Central processor unit (CPU): Where calculations and logical operations take place
+			- Contains limited registers, a high-frequency clock, a control unit, and an arithmetic logic unit
+		- Register: High-speed storage locations inside the CPU
+			- General-purpose registers: Used for arithmetic and data movement
+				- 32-bit ex: E[A,B,C,D]X, E[B,S]P, E[D,S]I
+				- 16-bit ex: AX
+				- 8-bit ex (only for A,B,C,D X): AH (high), AL (low)
+		- Clock: Synchronizes the internal operations of the CPU with other components
+			- A machine instruction requires at least one clock cycle to execute
+		- Control unit (CU): Coordinates the sequencing of steps involved in executing machine instructions
+		- Arithmetic logic unit (ALU): Performs arithmetic operations and logic operations
+		- Bus: Group of parallel wires that transfer data from one part of the computer to another
+			- Types: data, I/O, control, and address
+				- Data: Transfers instructions between CPU and memory
+				- I/O: Transfers data between CPU and I/O devices
+				- Control: Uses binary signals to synchronize all actions attached to system bus
+				- Address: Holds the addresses of instructions when something transfers data
+		- Cache: Programs want to access the same memory, caches keep these values for quick running
+			- Cache hit: When the processor is able to find its data in cache memory
+			- Cache miss: When the processor is unable to find its data in cache memory
+			- Levels
+				- Level 1: Cache on the CPU
+				- Level 2: Bit slower than level 1 and attached to the CPU by a high-speed data bus
+		- Program loader: Loads a program into memory so it can run
+		- Protected mode: Native state of the processor, all instructions and features are available
+			- Programs are given separate memory segments
+				- Programs cannot reference memory outside their segment
+		- Read-address mode: Implements environment of early Intel processor with a few extra features
+			- Can switch into other modes
+			- Direct access to system memory and hardware devices
+		- System management mode: Provides an operating system with power and system security management features
+		- Virtual-8086 mode: While in protected mode, the processor can execute MS-DOS safely
+			- If a crash occurs, it will not affect other programs running at the same time
+		- Device drivers: Programs that permit the OS to communicate directly with hardware devices and the BIOS
+	- General concepts
+		- Instruction execution cycle
+			- CPU has to go through this cycle to execute an instruction (fetch, decode and execute)
+				1. Fetch the instruction
+				2. Decodes binary pattern
+				3. Fetches operands from registers and memory
+				4. Executes the instruction, using operands from before
+				5. Stores the result of its execution in output operand
+		- Reading from memory
+			- Computers read memory much slower than they access internal registers
+				- Reading requires four steps
+					1. Place the address of what you want to read on the address bus
+					2. Change the value of the processor's read pin
+					3. Wait one clock cycle for the memory chips to respond
+					4. Copy the data from the data bus into the destination operand
+	- 32-bit processors
+		- Modes of operation
+			- Protected, read-address, system management, virtual-8086
+	- Input-output system
+		- Levels
+			- High-level language functions: Java contains functions to perform I/O
+			- Operating system: Can call OS functions from API library
+			- BIOS: Basic input-output system is a collection of routines the communicate with hardware
+- Chapter 3:
+	- Definitions
+		- Integer literals (constant): Made up of an optional leading sign, one or more digits, radix for base
+			- Ex: [{+ | -}] digits [radix {h, o, d, b, r, t, y}]
+			- Hexadecimal literal beginning with a letter must have a leading zero
+		- Constant integer expression: Mathematicall expression involving integer literals and arithmetic operators
+			- Use parentheses in expressions to clarify order of operations
+			- 16/5 = 3
+		- Character literals: Single character enclosed in single or double quotes, stores as ASCII code
+		- String literals: Sequence of characters & spaces enclosed in single or double quotes, stores as ASCII codes
+		- Reserved words: Have special meaning and can only bbe used in their correct context
+			- Types
+				- Instructions (mov, add, mul)
+				- Register names
+				- Directives
+				- Attributes (byte, word)
+				- Operators
+		- Identifiers: Program-chosen name to identify a variable, constant, procedure or code label
+		- Directives: Command embedded in source code that is acted upon by the assembleer
+			- Do not execute at runtime, but let you define variables, macros and procedures
+		- Instruction: Statement that becomes executable when a program is assembled
+			- Label: (optional) instruction mnemonic [operands] [; comment]
+		- Label: Identifier that acts as a place marker for instructions and data
+			- Date label: Identifies the location of a varible
+				- Ex: count DWORD 100
+				- If you put more than one data item after a label, they follow directly afterwards in memory
+			- Label in a code segment must end with a colon, these are used for jumping and looping
+		- Instruction mnemonic: Short word that identifies an instruction
+			- Ex: mov, add, sub, mul, jmp, call
+		- Operands: Value that is used for I/O for an instruction
+			- With multiple operands, the first is the typically the destination and the second is the source
+		- Comments: Showing information to the reader
+			- Single-line: Begin with a semicolon character
+			- Block: Use COMMENT directive followed by a symbol, add comments, end with symbol again
+		- No operation instruction: Takes up 1 byte and doesn't do any work
+			- Helps programs be more efficient by getting to an even multiple of 4
+	- Basic language elements
+		- .code, .data, .stack are directives called segments
+	- Assembling, linking, and running programs
+		- The assemble-link-execute cycle
+			- Steps
+				1. A programmer uses a text editor to create an ASCII text file named the source file
+				2. Assembler reads the source file and produces an object file
+					- If errors occur, it creates a listing file
+				3. Linker reads the object file, gets procedures from link library, and produces an executable file
+				4. OS loader utility reads the executable file into memory, points CPU to starting address, executes
