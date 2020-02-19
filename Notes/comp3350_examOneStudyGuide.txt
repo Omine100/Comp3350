@@ -313,4 +313,3 @@ Chapter 1:
 					loop L1
 		- Nested loops
 			- Be sure to put special consideration into the outer loop counter in ECX (save count in a variable)
-		
