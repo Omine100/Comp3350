@@ -101,6 +101,7 @@ Chapter 1:
 		- Protected mode: Native state of the processor, all instructions and features are available
 			- Programs are given separate memory segments
 				- Programs cannot reference memory outside their segment
+				- Each given 1mb
 		- Read-address mode: Implements environment of early Intel processor with a few extra features
 			- Can switch into other modes
 			- Direct access to system memory and hardware devices
@@ -167,6 +168,13 @@ Chapter 1:
 			- Block: Use COMMENT directive followed by a symbol, add comments, end with symbol again
 		- No operation instruction: Takes up 1 byte and doesn't do any work
 			- Helps programs be more efficient by getting to an even multiple of 4
+		- Listing file: Contains a copy of the source code, program identifiers, segments and related information
+		- Intrinsic data types: Describe types in terms of their size, whether signed, integer, or reals
+		- Date definition statement: Sets aside storage in memory for a variable, with an optional name
+			- Ex: [name] directive initializer [, initializer]...
+			- Ex: count DWORD 12345
+		- Symbolic constant: Created by associating an identifier with an integer expression or text
+			- Do not reserve any storage
 	- Basic language elements
 		- .code, .data, .stack are directives called segments
 	- Assembling, linking, and running programs
@@ -177,3 +185,132 @@ Chapter 1:
 					- If errors occur, it creates a listing file
 				3. Linker reads the object file, gets procedures from link library, and produces an executable file
 				4. OS loader utility reads the executable file into memory, points CPU to starting address, executes
+	- Defining data
+		- Intrinsic data types
+			- At least one initilizer is required in data definitions, even if it is zero
+				- ? can be used to signify that it is uninitialized
+		- Defining strings
+			- Use single or double quotation marks
+			- Most common type of string ends with a null byte (containing 0)
+			- 0Dh and 0Ah are alternately called CR/Lf (carriage-return line-feed)
+		- The line continuation character (\) concatenates two source code lines into a single statement
+		- DUP operator allocates storage for multiple data items, using a integer expression as a counter
+			- Ex: BYTE 20 DUP(0) ; 20 bytes, all equal to zero
+			- Ex: BYTE 4 DUP ("Stack") ; 20 bytes: "StackStackStackStack"
+		- Little-endian order
+			- Processors store and receive data from memory using this order (low to high)
+				- The least significant byte is stored at the first memory address
+					- Ex: 12345678h -> 0000: 78; 0001: 56; 0002: 34; 0003: 12
+	- Symbolic constants
+		- Equal-sign directive
+			- Associates a symbol name with an integer expression
+			- Can be redefined
+			- Ex: name = expression
+		- Current location counter ($)
+			- Associates a variable with its current offset value
+			- Ex: selfPtr DWORD $
+		- EQU directive
+			- Associates a symbolic name with an integer expression or some arbitrary text
+				- When the assembler encounters name later, it substitutes the integer value or text for the symbol
+			- Cannot be redefined
+			- Ex: name EQU expression/symbol/<text>
+- Chapter 4:
+	- Defintions
+		- Immediate operand: Uses a numeric literal expression
+		- Register operand: Uses a named register in the CPU
+		- Memory operand: References a memory location
+		- Offset operator: Returns the distance of a variable from the beginning of its enclosing segment
+		- Ptr operator: Lets you override an operand's default size
+		- Type operator: Returns the size (in bytes) of an operand or of each element in an array
+		- Lengthof operator: Returns the number of elements in an array
+		- Sizeof operator: Returns the number of bytes used by an array initializer
+		- Label directive: Provides a way to redefine the same variable with different size attributes
+		- Pointer: A variable containing the address of another variable
+		- Transfer of control: Way of altering the order in which statements are executed
+			- Unconditional: Control is transferred to a new location in all cases
+			- Conditional: Control is tranferred to a new location if a condition is true
+	- Data transfer instructions
+		- Instructions can have 0,1,2, or 3 operands
+		- Variable names are references to offsets within the data segment
+		- Mov instruction
+			- Copies data from a source operand to a destination operand
+			- Ex: mov [destination] [source]
+			- If mov AX, 0 and you have a 32 bit EAX, then it overrides the lower half with 0
+		- Movzx (move with zero-extend)
+			- Copies the contents of a source into a destination and zero-extends to 16 or 32 bits
+				- Only used with unsigned integers
+			- Ex: 10001111b into AX: 000000010001111b
+		- Movsz (move with sign-extend)
+			- Copies the contents of a source into a destination and sign-extends to 16 or 32 bits
+				- Only used with signed integers
+			- Ex: 10001111b into AX: 111111110001111b
+		- Direct-offset operands
+			- Access different parts of an array based on bit difference (byte = 1, word = 2, dword = 4, etc.)
+			- Ex: arrayB Byte 10h, 20h, 30h, 40h, 50h
+				mov AL, arrayB ; AL = 10h
+				mov AL, [arrayB+1] ; AL = 20h
+	- Addition and subtraction
+		- Inc and dec instructions
+			- Respectively add and subtract 1 from a register or memory operand
+		- Add instruction
+			- Adds a source to a destination of the same size
+		- Sub instruction
+			- Subtracts a source from a destination
+		- Neg instruction
+			- Reverses the sign of a number by converting to its two's complement
+			- Produces an invalid result if the destination operand cannot be stored correctly
+				- Ex: The negative of -128 won't fit in AL
+		- Flags affected by addition and subtraction
+			- Carry flag: Indicates unsigned integer overflow
+				- Inc and dec do not affect the carry flag
+				- Sum is larger than storage size, cf = 1
+				- Subtract a larger number from a smaller one, cf = 1
+			- Overflow flag: Indicates signed integer overflow
+			- Zero flag: Indicates that an operation produced zero
+			- Sign flag: Indicates that an operation produced a negative result
+			- Parity flag: Indicates whether or not an even number of 1 bits occurs in the LSB of the destination
+			- Auxiliary carry flag: Set when 1 bit carries out of position 3 in the LSB of the destination
+	- Data-related operators and directives
+		- Offset operator
+			- Ex: bVal Byte ?
+				wVal Word ?
+				mov ESI, OFFSET bVal ; ESI = 00404000h
+				mov ESI, OFFSET wVAL ; ESI = 00404001h
+		- Ptr operator
+			- Ex: myDouble DWORD 12345678h
+				mov AX, myDouble ; error because DWORD is 32-bit and AX is 16-bit
+				mov AX, WORD PTR myDouble ; moves 5678h to AX because of little endian storage format
+		- Sizeof operator
+			- Ex: intArray WORD 32 DUP(0)
+				mov EAX, SIZEOF intArray ; EAX = 32 * 2 (2 because WORD is 2 bits)
+		- Label directive
+			- Ex: val16 LABEL WORD
+				val32 DWORD 12345678h
+				mov AX, val16 ; AX = 5678h
+				mov DX, [val16+2] ; DX = 1234h
+	- Indirect addressing
+		- Using a register as a pointer and manipulating that value
+		- Ideal for use with arrays
+			- Ex: mov ESI, OFFSET arrayB
+				mov AL, [ESI] ; AL = 10h
+				inc ESI ; AL = 20h
+			- If we have a word array use add ESI, 2
+	- Jmp and loop instructions
+		- Jmp instruction
+			- Causes an unconditional transfer to a destination
+			- Ex: JMP destination
+			- Ex: top:
+				...
+				JMP top
+			- Great for creating loops, but no real way to exit the loop
+		- Loop instruction
+			- Repeats a block of statements a specific number of times
+			- ECX is automatically used as a counter and is decremented each time the loop repeats
+			- Ex: LOOP destination
+			- Ex: mov ax, 0
+				mov ecx, 5
+				L1: inc ax
+					loop L1
+		- Nested loops
+			- Be sure to put special consideration into the outer loop counter in ECX (save count in a variable)
+		
