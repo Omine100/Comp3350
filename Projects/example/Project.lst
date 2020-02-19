@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.16.27035.0	    01/30/20 17:16:01
+Microsoft (R) Macro Assembler Version 14.16.27035.0	    02/17/20 16:35:31
 ..\..\..\..\Prereqs\Irvine\Irvine\ch03\AddTwo.asm	     Page 1 - 1
 
 
@@ -12,7 +12,7 @@ Microsoft (R) Macro Assembler Version 14.16.27035.0	    01/30/20 17:16:01
 
  00000000			.code
  00000000			main proc
- 00000000  B8 00000005			mov	eax,5				
+ 00000000  B8 00000005			mov	eax,5		
  00000005  83 C0 06			add	eax,6				
 
 					invoke ExitProcess,0
@@ -20,7 +20,7 @@ Microsoft (R) Macro Assembler Version 14.16.27035.0	    01/30/20 17:16:01
  0000000A  E8 00000000 E   *	    call   ExitProcess
  0000000F			main endp
 				end main
-Microsoft (R) Macro Assembler Version 14.16.27035.0	    01/30/20 17:16:01
+Microsoft (R) Macro Assembler Version 14.16.27035.0	    02/17/20 16:35:31
 ..\..\..\..\Prereqs\Irvine\Irvine\ch03\AddTwo.asm	     Symbols 2 - 1
 
 
