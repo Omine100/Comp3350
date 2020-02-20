@@ -137,7 +137,7 @@ Chapter 1:
 		- Integer literals (constant): Made up of an optional leading sign, one or more digits, radix for base
 			- Ex: [{+ | -}] digits [radix {h, o, d, b, r, t, y}]
 			- Hexadecimal literal beginning with a letter must have a leading zero
-		- Constant integer expression: Mathematicall expression involving integer literals and arithmetic operators
+		- Constant integer expression: Mathematical expression involving integer literals and arithmetic operators
 			- Use parentheses in expressions to clarify order of operations
 			- 16/5 = 3
 		- Character literals: Single character enclosed in single or double quotes, stores as ASCII code
