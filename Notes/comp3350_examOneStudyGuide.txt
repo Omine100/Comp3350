@@ -131,7 +131,7 @@ Chapter 1:
 		- Levels
 			- High-level language functions: Java contains functions to perform I/O
 			- Operating system: Can call OS functions from API library
-			- BIOS: Basic input-output system is a collection of routines the communicate with hardware
+			- BIOS: Basic I/O system is a collection of routines that communicate with hardware
 - Chapter 3:
 	- Definitions
 		- Integer literals (constant): Made up of an optional leading sign, one or more digits, radix for base
@@ -142,7 +142,7 @@ Chapter 1:
 			- 16/5 = 3
 		- Character literals: Single character enclosed in single or double quotes, stores as ASCII code
 		- String literals: Sequence of characters & spaces enclosed in single or double quotes, stores as ASCII codes
-		- Reserved words: Have special meaning and can only bbe used in their correct context
+		- Reserved words: Have special meaning and can only be used in their correct context
 			- Types
 				- Instructions (mov, add, mul)
 				- Register names
@@ -150,10 +150,10 @@ Chapter 1:
 				- Attributes (byte, word)
 				- Operators
 		- Identifiers: Program-chosen name to identify a variable, constant, procedure or code label
-		- Directives: Command embedded in source code that is acted upon by the assembleer
-			- Do not execute at runtime, but let you define variables, macros and procedures
 		- Instruction: Statement that becomes executable when a program is assembled
 			- Label: (optional) instruction mnemonic [operands] [; comment]
+		- Directives: Command embedded in source code that is acted upon by the assembler
+			- Do not execute at runtime, but let you define variables, macros and procedures
 		- Label: Identifier that acts as a place marker for instructions and data
 			- Date label: Identifies the location of a varible
 				- Ex: count DWORD 100
@@ -161,7 +161,7 @@ Chapter 1:
 			- Label in a code segment must end with a colon, these are used for jumping and looping
 		- Instruction mnemonic: Short word that identifies an instruction
 			- Ex: mov, add, sub, mul, jmp, call
-		- Operands: Value that is used for I/O for an instruction
+		- Operands: Value that is used for I/O in an instruction
 			- With multiple operands, the first is the typically the destination and the second is the source
 		- Comments: Showing information to the reader
 			- Single-line: Begin with a semicolon character
@@ -174,7 +174,7 @@ Chapter 1:
 			- Ex: [name] directive initializer [, initializer]...
 			- Ex: count DWORD 12345
 		- Symbolic constant: Created by associating an identifier with an integer expression or text
-			- Do not reserve any storage
+			- Does not reserve any storage
 	- Basic language elements
 		- .code, .data, .stack are directives called segments
 	- Assembling, linking, and running programs
