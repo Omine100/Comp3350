@@ -1,0 +1,3 @@
+﻿  Assembling ..\..\..\..\Prereqs\Irvine\Irvine\ch03\main.asm...
+..\..\..\..\Prereqs\Irvine\Irvine\ch03\main.asm(46): error A2031: must be index or base register
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\BuildCustomizations\masm.targets(69,5): error MSB3721: The command "ml.exe /c /nologo /Sg /Zi /Fo"Debug\main.obj" /Fl"Project.lst" /I "c:\users\matth\documents\programming\prereqs\irvine\irvine" /W3 /errorReport:prompt  /Ta..\..\..\..\Prereqs\Irvine\Irvine\ch03\main.asm" exited with code 1.
