@@ -9,9 +9,6 @@ include irvine32.inc
 	Spacing BYTE ", ", 0
 	String1 BYTE "The target value is: ", 0
 	String2 BYTE "and is located at index: ", 0
-	String3 BYTE "is not located in the list.", 0
-	String4 BYTE "Value: ", 0
-	TargetValue BYTE 0, 0
 
 .code
 main proc
@@ -31,21 +28,32 @@ main proc
 	mov edx, offset String1
 	call writestring
 	call readint
-	mov TargetValue, al
 	pop ax
 
-	mov ecx, 2
-	L2:
-		mov edx, offset String4
-		call writestring
-		pop ax
-		call writeint
-	loop L2
+	call search
+
+	mov edx, offset string2
+	call writestring
+	call writeint
 	
 	invoke ExitProcess, 0
 main endp
 
 search proc
+	mov edx, offset String2
+	call writestring
+
+	mov ecx, 2
+	L2:
+		cmp ax, [ax - 1]
+		je L4
+
+	L3:
+		inc bx
+
+	L4:
+		ret
+
 search endp
 
 end main
