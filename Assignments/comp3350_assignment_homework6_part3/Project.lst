@@ -1,8 +1,8 @@
-Microsoft (R) Macro Assembler Version 14.16.27035.0	    03/13/20 22:19:43
-Addressing Modes		(main.asm		     Page 1 - 1
+Microsoft (R) Macro Assembler Version 14.16.27035.0	    03/15/20 19:28:41
+Addressing Modes		(part3.asm		     Page 1 - 1
 
 
-				TITLE Addressing Modes		(main.asm)
+				TITLE Addressing Modes		(part3.asm)
 
 				include irvine32.inc
 			      C ; Include file for Irvine32.lib             (Irvine32.inc)
@@ -43,6 +43,7 @@ Microsoft (R) Macro Assembler Version 14.16.27035.0	    03/13/20 22:19:43
 	   61 74 20 69 6E
 	   64 65 78 3A 20
 	   00
+ 0000004A 00000000			position DD ?
 
  00000000			.code
  00000000			main proc
@@ -51,7 +52,7 @@ Microsoft (R) Macro Assembler Version 14.16.27035.0	    03/13/20 22:19:43
  0000000A  B9 00000000			mov ecx, 0
  0000000F  BA 00000000			mov edx, 0
 
- 00000014  B9 00000002			mov ecx, 2
+ 00000014  B9 00000005			mov ecx, 5
  00000019				L1:
  00000019  BA 00000000 R			mov edx, offset Prompt
  0000001E  E8 00000000 E			call writestring
@@ -62,40 +63,49 @@ Microsoft (R) Macro Assembler Version 14.16.27035.0	    03/13/20 22:19:43
  0000002C  BA 0000001A R		mov edx, offset String1
  00000031  E8 00000000 E		call writestring
  00000036  E8 00000000 E		call readint
- 0000003B  66| 58			pop ax
+ 0000003B  66| 8B D8			mov bx, ax
+ 0000003E  66| 58			pop ax
 
- 0000003D  E8 00000016			call search
+ 00000040  B9 00000005			mov ecx, 5
+ 00000045					L2:
+ 00000045  E8 0000003A					call search
+ 0000004A  66| 3B C3					cmp ax, bx
+ 0000004D  74 1A					je L4
+ 0000004F  66| 58					pop ax
+ 00000051  E2 F2				loop L2
 
- 00000042  BA 00000030 R		mov edx, offset string2
- 00000047  E8 00000000 E		call writestring
- 0000004C  E8 00000000 E		call writeint
-					
-					invoke ExitProcess, 0
- 00000051  6A 00	   *	    push   +000000000h
- 00000053  E8 00000000 E   *	    call   ExitProcess
- 00000058			main endp
+ 00000053  BA 00000030 R		mov edx, offset string2
+ 00000058  E8 00000000 E		call writestring
+ 0000005D  B8 FFFFFFFF			mov eax, -1
+ 00000062  E8 00000000 E		call writeint
+ 00000067  EB 14			jmp L5
 
- 00000058			search proc
- 00000058  BA 00000030 R		mov edx, offset String2
- 0000005D  E8 00000000 E		call writestring
 
- 00000062  B9 00000002			mov ecx, 2
- 00000067				L2:
-						cmp ax, [ax - 1]
-..\..\..\..\Prereqs\Irvine\Irvine\ch03\main.asm(48) : error A2031:must be index or base register
- 00000067  74 10				je L4
+ 00000069				L4:
+ 00000069  BA 00000030 R			mov edx, offset string2
+ 0000006E  E8 00000000 E			call writestring
+ 00000073  A1 0000004A R			mov eax, position
+ 00000078  E8 00000000 E			call writeint
 
- 00000077				L3:
- 00000077  66| 43				inc bx
+ 0000007D				L5:
+						invoke ExitProcess, 0
+ 0000007D  6A 00	   *	    push   +000000000h
+ 0000007F  E8 00000000 E   *	    call   ExitProcess
+ 00000084			main endp
 
- 00000079				L4:
- 00000079  C3					ret
+ 00000084			search proc
+ 00000084  66| 3B C3			cmp ax, bx
+ 00000087  74 06			je L3
 
- 0000007A			search endp
+ 00000089  FF 05 0000004A R		inc position
+
+ 0000008F				L3:
+ 0000008F  C3					ret
+ 00000090			search endp
 
 				end main
-Microsoft (R) Macro Assembler Version 14.16.27035.0	    03/13/20 22:19:43
-Addressing Modes		(main.asm		     Symbols 2 - 1
+Microsoft (R) Macro Assembler Version 14.16.27035.0	    03/15/20 19:28:41
+Addressing Modes		(part3.asm		     Symbols 2 - 1
 
 
 
@@ -188,8 +198,8 @@ Segments and Groups:
 
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 0000004A Para	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 0000007A Para	  Public  'CODE'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 0000004E Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000090 Para	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -296,14 +306,15 @@ WriteStackFrame  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 WriteString  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteToFile  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteWindowsMsg  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000058 Public STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000084 Public STDCALL
   L1 . . . . . . . . . . . . . .	L Near	 00000019 _TEXT	
+  L2 . . . . . . . . . . . . . .	L Near	 00000045 _TEXT	
+  L4 . . . . . . . . . . . . . .	L Near	 00000069 _TEXT	
+  L5 . . . . . . . . . . . . . .	L Near	 0000007D _TEXT	
 printf . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 scanf  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
-search . . . . . . . . . . . . .	P Near	 00000058 _TEXT	Length= 00000022 Public STDCALL
-  L2 . . . . . . . . . . . . . .	L Near	 00000067 _TEXT	
-  L3 . . . . . . . . . . . . . .	L Near	 00000077 _TEXT	
-  L4 . . . . . . . . . . . . . .	L Near	 00000079 _TEXT	
+search . . . . . . . . . . . . .	P Near	 00000084 _TEXT	Length= 0000000C Public STDCALL
+  L3 . . . . . . . . . . . . . .	L Near	 0000008F _TEXT	
 wsprintfA  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 
 
@@ -538,10 +549,11 @@ lightGreen . . . . . . . . . . .	Number	 0000000Ah
 lightMagenta . . . . . . . . . .	Number	 0000000Dh   
 lightRed . . . . . . . . . . . .	Number	 0000000Ch   
 magenta  . . . . . . . . . . . .	Number	 00000005h   
+position . . . . . . . . . . . .	DWord	 0000004A _DATA	
 red  . . . . . . . . . . . . . .	Number	 00000004h   
 white  . . . . . . . . . . . . .	Number	 0000000Fh   
 wsprintf . . . . . . . . . . . .	Text   	 wsprintfA
 yellow . . . . . . . . . . . . .	Number	 0000000Eh   
 
 	   0 Warnings
-	   1 Errors
+	   0 Errors

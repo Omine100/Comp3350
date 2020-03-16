@@ -1,8 +1,8 @@
-Microsoft (R) Macro Assembler Version 14.16.27035.0	    03/10/20 14:48:32
-Addressing Modes		(main.asm		     Page 1 - 1
+Microsoft (R) Macro Assembler Version 14.16.27035.0	    03/15/20 19:40:23
+Addressing Modes		(part2.asm		     Page 1 - 1
 
 
-				TITLE Addressing Modes		(main.asm)
+				TITLE Addressing Modes		(part2.asm)
 
 				include irvine32.inc
 			      C ; Include file for Irvine32.lib             (Irvine32.inc)
@@ -62,8 +62,8 @@ Microsoft (R) Macro Assembler Version 14.16.27035.0	    03/10/20 14:48:32
  00000044				main endp
 
 				end main
-Microsoft (R) Macro Assembler Version 14.16.27035.0	    03/10/20 14:48:32
-Addressing Modes		(main.asm		     Symbols 2 - 1
+Microsoft (R) Macro Assembler Version 14.16.27035.0	    03/15/20 19:40:23
+Addressing Modes		(part2.asm		     Symbols 2 - 1
 
 
 
