@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.16.27035.0	    03/15/20 19:44:50
+Microsoft (R) Macro Assembler Version 14.16.27035.0	    03/15/20 19:55:51
 Addressing Modes		(part1.asm		     Page 1 - 1
 
 
@@ -68,7 +68,7 @@ Microsoft (R) Macro Assembler Version 14.16.27035.0	    03/15/20 19:44:50
  00000046				AddTwo endp
 
 				end main
-Microsoft (R) Macro Assembler Version 14.16.27035.0	    03/15/20 19:44:50
+Microsoft (R) Macro Assembler Version 14.16.27035.0	    03/15/20 19:55:51
 Addressing Modes		(part1.asm		     Symbols 2 - 1
 
 
