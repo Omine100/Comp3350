@@ -1,0 +1,38 @@
+TITLE Addressing Modes		(part1.asm)
+
+include irvine32.inc
+
+.stack 4096
+
+.data
+	insertFirstNumber BYTE "Please input a value: ", 0
+	insertSecondNumber BYTE "Enter second number: ", 0
+	addition BYTE "Sum: ", 0
+
+.code
+main proc
+	mov edx, offset insertFirstNumber
+	call writestring
+	call readint
+	mov bx, ax
+
+	mov edx, offset insertSecondNumber
+	call writestring
+	call readint
+	mov cx, ax
+
+	mov edx, offset addition
+	call writestring
+	call AddTwo
+	
+	invoke ExitProcess, 0
+main endp
+
+AddTwo proc
+	add bx, cx
+	mov ax, bx
+	call WriteInt
+	ret
+	AddTwo endp
+
+end main
