@@ -1,0 +1,14 @@
+mov cl, 1		;
+mov al, 12h		;
+rol al, cl		; 24h
+mov al, 34h		; 
+mov cl, 2		;
+ror al, Cl 		; 0Dh
+stc			; 0Dh
+mov al, 56h		;
+mov cl, 3		;
+rcl al, cl		; B5h
+stc			; B5h
+mov al, 78h		;
+mov cl, 1		;
+rcr al, cl		; BCh

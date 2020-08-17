@@ -1,0 +1,8 @@
+Hardware Interrupts: When the hardware sends a signal to request the processor to do a task.
+	- Ex: INTR, RESET
+Software Interrupts: When the code has an instruction to go with an interrupt.
+	- Ex: INT <xx>, TRAP
+Maskable Interrupts: When the interrupt can be disabled.
+	- Ex: INT, INTR
+Non-Maskable Interrupts: When the interrupt cannot be disabled by the program.
+	- Ex: NMI, Reset

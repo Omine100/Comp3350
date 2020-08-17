@@ -1,0 +1,13 @@
+A. 	AX: 8642
+   	DX: B000
+
+  	If mov dx, 0 is not placed at the beginning, then AX will remain unchanged, 
+	but DX will be some other unpredictable value.
+
+B. 	An IDIV instruction causes an overflow when the quotient is too big to fit in the operand.
+
+C. 	DX:AX = FFFF FFFE
+	
+	This could be used in a 16-bit computer to get to values only a 32-bit computer could produce.
+	By having this the process has values in that whole range, so it is very useful for computations
+	along with many other procedures.	
